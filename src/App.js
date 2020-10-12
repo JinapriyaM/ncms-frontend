@@ -9,6 +9,7 @@ import {
 import Home from "./containers/Home/Home";
 import Signinup from "./containers/Signinup/Signinup";
 import Register from './containers/Register/Register';
+import Doctor from './containers/Doctor/Doctor';
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import Footer from './components/Footer/Footer';
@@ -24,6 +25,9 @@ function App() {
 					</Route>
 					<Route path="/sign" exact>
 						<Signinup />
+					</Route>
+					<Route path="/doctor" exact>
+						<Doctor />
 					</Route>
 					<Route path="/register" exact>
 						<Register />
