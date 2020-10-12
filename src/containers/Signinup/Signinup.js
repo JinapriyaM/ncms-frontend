@@ -4,7 +4,7 @@ import Card from '../../components/MiscElements/Card';
 import Input from '../../components/FormElements/Input';
 import Button from '../../components/FormElements/Button';
 import './Signup.css';
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../components/FormElements/validators';
+import {  VALIDATOR_MINLENGTH } from '../../components/FormElements/validators';
 import {useForm} from '../../components/FormElements/form-hook';
 
 const loginHandler = async (event) => {
