@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Card from "../../../components/MiscElements/Card";
 
 
 const AdmitPatient = () => {
-    const [newPatient, setNewPatient] = useState();
+    const [newPatient, setNewPatient] = useState(
+        {
+            Response: ["aaa","bbb"]
+        }
+    );
     useEffect(() => {
         const getNewPatient = async () => {
             try {
                 const response = await fetch('http://localhost:8080/doctor/getNotAdmitPatients')
                 const responseData = await response.json();
-                setNewPatient(responseData.Response);
-                console.log(responseData);
+                setNewPatient(responseData);
+                console.log(responseData.Response.value);
                 if(!response.ok){
                     throw new Error(responseData.message);
                 }
@@ -28,7 +33,8 @@ const AdmitPatient = () => {
     console.log(newPatient);
     return (<div>
         {console.log(newPatient)}
-        {/* <ul>{newPatientList}</ul> */}
+        <ul>{newPatientList}</ul>
+        
     </div>)
 }
 
