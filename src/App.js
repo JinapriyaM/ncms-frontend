@@ -11,6 +11,7 @@ import Signinup from "./containers/Signinup/Signinup";
 import Register from './containers/Register/Register';
 import Doctor from './containers/Doctor/Doctor';
 import DoctorStat from './containers/Doctor/DoctorStat/DoctorStat';
+import AdmitPatient from './containers/Doctor/AdmitPatient/AdmitPatient';
 
 import MainNavigation from "./components/Navigation/MainNavigation";
 import Footer from './components/Footer/Footer';
@@ -32,6 +33,9 @@ function App() {
 					</Route>
 					<Route path="/doctor-stat" exact>
 						<DoctorStat />
+					</Route>
+					<Route path="/admit-patient" exact>
+						<AdmitPatient />
 					</Route>
 					<Route path="/register" exact>
 						<Register />

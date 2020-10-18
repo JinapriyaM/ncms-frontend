@@ -23,7 +23,7 @@ const Doctor = props => {
     <React.Fragment>
         <Card className="doctor-card">
             <h1>Admit Patient</h1>
-            <Button>Click Here</Button>
+            <Button to="/admit-patient">Click Here</Button>
         </Card>
         <Card className="doctor-card">
             <h1>Discharge Patient</h1>
