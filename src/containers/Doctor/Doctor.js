@@ -20,20 +20,7 @@ const admitPatientHandler = async event => {
 
 const Doctor = props => {
     return (
-    <React.Fragment>
-        <Card className="doctor-card">
-            <h1>Admit Patient</h1>
-            <Button to="/admit-patient">Click Here</Button>
-        </Card>
-        <Card className="doctor-card">
-            <h1>Discharge Patient</h1>
-            <Button>Click Here</Button>
-        </Card>
-        <Card className="doctor-card">
-            <h1>Statistics</h1>
-            <Button to="/doctor-stat">Click Here</Button>
-        </Card>
-    </React.Fragment>
+        
     )
 }
 

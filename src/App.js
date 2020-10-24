@@ -1,33 +1,27 @@
 import React from "react";
 import {
-	BrowserRouter as Router,
-	Route,
-	Redirect,
-	Switch,
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
 } from "react-router-dom";
-
+import SignIn from "./containers/Signinup/SignIn";
 import Home from "./containers/Home/Home";
-import Signinup from "./containers/Signinup/Signinup";
-import Register from './containers/Register/Register';
-import Doctor from './containers/Doctor/Doctor';
-import DoctorStat from './containers/Doctor/DoctorStat/DoctorStat';
-import AdmitPatient from './containers/Doctor/AdmitPatient/AdmitPatient';
-
-import MainNavigation from "./components/Navigation/MainNavigation";
-import Footer from './components/Footer/Footer';
+import HeaderBar from "./components/HeaderBar/HeaderBar";
+import Register from './containers/Register/Register'
 
 function App() {
-	return (
-		<Router>
-			<MainNavigation />
-			<main>
-				<Switch>
-					<Route path="/" exact>
-						<Home />
+  return (
+    <Router>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/sign" exact>
+						<SignIn />
 					</Route>
-					<Route path="/sign" exact>
-						<Signinup />
-					</Route>
+          {/* 
 					<Route path="/doctor" exact>
 						<Doctor />
 					</Route>
@@ -36,16 +30,18 @@ function App() {
 					</Route>
 					<Route path="/admit-patient" exact>
 						<AdmitPatient />
-					</Route>
+          </Route>
+           */}
 					<Route path="/register" exact>
 						<Register />
 					</Route>
-					<Redirect to="/" />
-				</Switch>
-			</main>
-			<Footer />
-		</Router>
-	);
+          <Redirect to="/" />
+        </Switch>
+      </main>
+
+      {/* <footer>ddddd</footer> */}
+    </Router>
+  );
 }
 
 export default App;
