@@ -8,7 +8,11 @@ import {
 import SignIn from "./containers/Signinup/SignIn";
 import Home from "./containers/Home/Home";
 import HeaderBar from "./components/HeaderBar/HeaderBar";
-import Register from './containers/Register/Register'
+import Register from "./containers/Register/Register";
+import Doctor from "./containers/Doctor/Doctor";
+import Hospital from "./containers/Hospital/Hospital";
+import Moh from "./containers/Moh/Moh";
+import Patient from "./containers/Patient/Patient";
 
 function App() {
   return (
@@ -19,12 +23,21 @@ function App() {
             <Home />
           </Route>
           <Route path="/sign" exact>
-						<SignIn />
-					</Route>
+            <SignIn />
+          </Route>
+          <Route path="/doctor" exact>
+            <Doctor />
+          </Route>
+          <Route path="/hospital" exact>
+            <Hospital />
+          </Route>
+          <Route path="/moh" exact>
+            <Moh />
+          </Route>
+          <Route path="/patient" exact>
+            <Patient />
+          </Route>
           {/* 
-					<Route path="/doctor" exact>
-						<Doctor />
-					</Route>
 					<Route path="/doctor-stat" exact>
 						<DoctorStat />
 					</Route>
@@ -32,9 +45,9 @@ function App() {
 						<AdmitPatient />
           </Route>
            */}
-					<Route path="/register" exact>
-						<Register />
-					</Route>
+          <Route path="/register" exact>
+            <Register />
+          </Route>
           <Redirect to="/" />
         </Switch>
       </main>

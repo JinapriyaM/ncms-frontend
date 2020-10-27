@@ -1,23 +1,18 @@
 import React, { useState } from "react";
-//import image from "../../alies/wgMLUS.jpg";
-//import Container from "@material-ui/core/Container";
-
-import { connect } from "react-redux";
+import image from "../../alies/wgMLUS.jpg";
+import Container from "@material-ui/core/Container";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-//import Card from "@material-ui/core/Card";
-//import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
 import PCard from "../../components/Card/PCard";
-import AdmitTable from "./AdmitTable";
-import DischargeTable from './DischargeTable'
-
 
 const useStyles = makeStyles({
   root: {
@@ -44,55 +39,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Doctor = (props) => {
+const Patient = (props) => {
   const classes = useStyles();
   const [newPatients, loadNewPatients] = useState(false);
-  const [discharge, setDischarge] = useState(false);
 
-  const products = [
-    { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-    { name: "Product 2", desc: "Another thing", price: "$3.45" },
-    { name: "Product 3", desc: "Something else", price: "$6.51" },
-    { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-    { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-    { name: "Product 2", desc: "Another thing", price: "$3.45" },
-    { name: "Product 3", desc: "Something else", price: "$6.51" },
-    { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-    { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-    { name: "Product 2", desc: "Another thing", price: "$3.45" },
-  ];
-  //   let patient = products.map((pro, index) => {
-  //     return (
-  //       <Grid key={index} xs={4} item>
-  //         <PCard
-  //           key={index}
-  //           title={pro.name}
-  //           user={pro.price}
-  //           desc={pro.desc}
-  //         />
-  //         {console.log(pro.name)}
-  //       </Grid>
-  //     );
-  //   });
-  let patient = null;
-  console.log(patient);
-  //   const loadPatientHandler = (e) => {
-  //     e.preventDefault();
 
-  patient = products.map((pro, index) => {
-    return (
-      <Grid key={index} xs={3} item>
-        <PCard key={index} title={pro.name} user={pro.price} desc={pro.desc} />
-        {console.log(pro.name)}
-      </Grid>
-    );
-  });
-  console.log(patient);
-  console.log(props.name);
-  console.log(props.username);
-  console.log(props.type);
-  //loadNewPatients(true);
-  //   };
 
   return (
     // <Container fixed>
@@ -108,7 +59,7 @@ const Doctor = (props) => {
               <Grid item container spacing={2} direction="column" >
                 <Grid item xs>
                   <Typography variant="h5" component="h2">
-                    Doctor
+                    Patient
                   </Typography>
                 </Grid>
                 <Grid item xs>
@@ -140,9 +91,7 @@ const Doctor = (props) => {
             </Paper>
           </Grid>
           <Grid item container xs={10}>
-            {/* <Paper className={classes.paperWin}>
-            </Paper> */}
-            {newPatients ? <AdmitTable /> : "ddddddd"}
+            dddd
           </Grid>
         </Grid>
 
@@ -154,13 +103,4 @@ const Doctor = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    username: state.username,
-    name: state.name,
-    type: state.type
-
-  };
-};
-
-export default connect(mapStateToProps)(Doctor);
+export default Patient;

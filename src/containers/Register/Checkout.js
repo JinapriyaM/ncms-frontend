@@ -15,6 +15,9 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
+import { connect } from "react-redux";
+import {clearRegData} from '../../store/action/action'
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -68,12 +71,49 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+const Checkout = (props) => {
   const classes = useStyles();
+  const details =  {
+    firstName : props.firstname,
+    lastName : props.lastname,
+    district : props.district,
+    locationX : props.locationx,
+    locationY : props.locationy,
+    gender : props.gender,
+    contact : props.contactno,
+    email: props.email,
+    age : props.age,
+  }
   const [activeStep, setActiveStep] = React.useState(0);
+  const [msg, setMsg] = React.useState("");
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    console.log(activeStep)
+    if(activeStep === 2){
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
+        body: formBody,
+      };
+      fetch("http://localhost:8080/regPatient", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          //props.onSignIn(data);
+          console.log(data)
+
+          //setResData(data);
+        });
+    }
   };
 
   const handleBack = () => {
@@ -134,3 +174,27 @@ export default function Checkout() {
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    firstname: state.regis.firstname,
+    lastname: state.regis.lastname,
+    address: state.regis.address,
+    contactno: state.regis.contactno,
+    district: state.regis.district,
+    locationx: state.regis.locationx,
+    locationy: state.regis.locationy,
+    gender: state.regis.gender,
+    age: state.regis.age,
+    email: state.regis.email,
+    password: state.regis.password
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearData: (data) => dispatch(clearRegData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

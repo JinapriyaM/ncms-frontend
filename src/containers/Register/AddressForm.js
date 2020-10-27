@@ -5,8 +5,11 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { connect } from "react-redux";
 
-export default function AddressForm() {
+import { stepOneData } from "../../store/action/action";
+
+const AddressForm = (props) => {
   const genderObject = [{ gen: "Male" }, { gen: "Female" }];
   const flatProps = {
     options: genderObject.map((option) => option.gen),
@@ -23,6 +26,19 @@ export default function AddressForm() {
             id="firstName"
             name="firstName"
             label="First name"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: e.target.value,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="given-name"
           />
@@ -33,6 +49,19 @@ export default function AddressForm() {
             id="lastName"
             name="lastName"
             label="Last name"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: e.target.value,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="family-name"
           />
@@ -43,6 +72,19 @@ export default function AddressForm() {
             id="address1"
             name="address"
             label="Address"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: e.target.value,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="shipping address-line1"
           />
@@ -54,6 +96,19 @@ export default function AddressForm() {
             id="address2"
             name="contact"
             label="Contact Number"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: e.target.value,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="shipping address-line2"
           />
@@ -64,6 +119,19 @@ export default function AddressForm() {
             id="city"
             name="city"
             label="District"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: e.target.value,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="shipping address-level2"
           />
@@ -73,16 +141,42 @@ export default function AddressForm() {
             id="state"
             name="state"
             label="State/Province/Region"
+            // onChange={(e) =>
+            //   props.stepOneData({
+            //     firstname: props.firstname,
+            //     lastname: e.target.value,
+            //     address: props.address,
+            //     contactno: props.contactno,
+            //     district: props.district,
+            //     locationx: props.locationx,
+            //     locationy: props.locationy,
+            //     gender: props.gender,
+            //     age: props.age
+            //   })
+            // }
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-          type="number"
+            type="number"
             required
             id="locationX"
             name="locationX"
             label="location X"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: e.target.value,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="shipping postal-code"
           />
@@ -94,17 +188,45 @@ export default function AddressForm() {
             id="locationY"
             name="locationY"
             label="locationY"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: e.target.value,
+                gender: props.gender,
+                age: props.age
+              })
+            }
             fullWidth
             autoComplete="shipping country"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
+            required
             {...flatProps}
             id="flat-demo"
             renderInput={(params) => (
               <TextField {...params} label="Gender" margin="normal" />
             )}
+            onChange={(e, value) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: value,
+                age: props.age
+              })
+            }
+            // onChange={(e, value)=>alert(value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -114,6 +236,19 @@ export default function AddressForm() {
             id="locationY"
             name="age"
             label="Age"
+            onChange={(e) =>
+              props.onRegisterStepOne({
+                firstname: props.firstname,
+                lastname: props.lastname,
+                address: props.address,
+                contactno: props.contactno,
+                district: props.district,
+                locationx: props.locationx,
+                locationy: props.locationy,
+                gender: props.gender,
+                age: e.target.value
+              })
+            }
             fullWidth
             autoComplete="shipping country"
           />
@@ -121,4 +256,26 @@ export default function AddressForm() {
       </Grid>
     </React.Fragment>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    firstname: state.regis.firstname,
+    lastname: state.regis.lastname,
+    address: state.regis.address,
+    contactno: state.regis.contactno,
+    district: state.regis.district,
+    locationx: state.regis.locationx,
+    locationy: state.regis.locationy,
+    gender: state.regis.gender,
+    age: state.regis.age,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegisterStepOne: (data) => dispatch(stepOneData(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddressForm);
