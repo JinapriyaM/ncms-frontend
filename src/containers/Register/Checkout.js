@@ -83,6 +83,7 @@ const Checkout = (props) => {
     contact : props.contactno,
     email: props.email,
     age : props.age,
+    password: props.password
   }
   const [activeStep, setActiveStep] = React.useState(0);
   const [msg, setMsg] = React.useState("");
@@ -143,9 +144,7 @@ const Checkout = (props) => {
                   Succefully Registerd.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                 You can check your status by signin to the account
                 </Typography>
               </React.Fragment>
             ) : (

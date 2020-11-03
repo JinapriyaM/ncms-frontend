@@ -11,6 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
+import AddDoctor from "./AddDoctor"
+import Account from "./Account"
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +41,9 @@ const useStyles = makeStyles({
 
 const Hospital = (props) => {
   const classes = useStyles();
+  const [showAddDoctot, setAddDoctor] = React.useState(false);
+  const [showAccount, setShowAccount] = React.useState(false);
+  const [showStat, setShowStat] = React.useState(false);
 
   return (
     // <Container fixed>
@@ -60,8 +65,13 @@ const Hospital = (props) => {
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
+                    onClick={() => {
+                      setAddDoctor(true);
+                      setShowAccount(false)
+                      setShowStat(false)
+                    }}
                   >
-                    Admit Patient
+                    Add Doctor
                   </Button>
                 </Grid>
                 <Grid item xs>
@@ -72,15 +82,38 @@ const Hospital = (props) => {
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
+                    onClick={() => {
+                      setAddDoctor(false);
+                      setShowAccount(false)
+                      setShowStat(true)
+                    }}
                   >
-                    Discharge Patient
+                    Statistics
+                  </Button>
+                </Grid>
+                <Grid item xs>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    className={classes.submit}
+                    // onClick={signInHandler}
+                    onClick={() => {
+                      setAddDoctor(false);
+                      setShowAccount(true)
+                      setShowStat(false)
+                    }}
+                  >
+                    Account
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <Paper className={classes.paperWin}></Paper>
+            {/* <Paper className={classes.paperWin}></Paper> */}
+            {showAddDoctot ? <AddDoctor /> : showAccount ? <Account /> : null }
           </Grid>
         </Grid>
 

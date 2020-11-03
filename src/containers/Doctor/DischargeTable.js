@@ -11,55 +11,39 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-
 const columns = [
-  { id: "name", label: "First Name", minWidth: 170 },
-  { id: "code", label: "Last Name", minWidth: 100 },
+  { id: "firstname", label: "First Name", minWidth: 170 },
+  { id: "lastname", label: "Last Name", minWidth: 100 },
   {
-    id: "population",
+    id: "district",
     label: "District",
-    minWidth: 170,
+    minWidth: 150,
     //     align: 'right',
     //     format: (value) => value.toLocaleString('en-US'),
     //
   },
   {
-    id: "size",
+    id: "gender",
     label: "Gender",
-    minWidth: 170,
+    minWidth: 150,
     // align: 'right',
     // format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: "density",
+    id: "age",
     label: "Age",
     minWidth: 10,
     align: "center",
     format: (value) => value.toFixed(0),
   },
-];
 
-function createData(name, code, population, size, density) {
-  //const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData("Madushanka", "Kulasinghe", "Kandy", "Male", 20),
-  createData("Dilanka", "Yapa", "Kandy", "Male", 22),
-  createData("Thilanka", "Yapa", "Kandy", "Male", 36),
-  createData("Hasitha", "Karunathilaka", "Kandy", "Male", 45),
-  createData("Eranga", "Perera", "Matale", "Female", 41),
-  createData("Priyanthi", "Alwis", "Matale", "Female", 65),
-  createData("Thilanka", "sdfs", "Kandy", "Male", 54),
-  createData("Sureka", "dfsdff", "Kandy", "Male", 44),
-  createData("Dulshan", "fdfd", "Kandy", "Male", 56),
-  createData("Japan", "fdfsdfd", "Kandy", "Male", 22),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
+  {
+    id: "severity",
+    label: "Severity Level",
+    minWidth: 10,
+    align: "center",
+    // format: (value) => value.toFixed(0),
+  },
 ];
 
 const useStyles = makeStyles({
@@ -74,7 +58,66 @@ const useStyles = makeStyles({
 export default function StickyHeadTable() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+  const [upd, setUpd] = React.useState("");
+  // let rows  = []
+
+  const getPatients = () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
+    };
+    fetch("http://localhost:8080/doctor/getAdmitedPatients", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.Response.map(i => i.firstname))
+        // const newData = data.Response
+        setRows(data);
+        // console.log(Object.values(data[0]))
+        // rows.push(Object.values(data[0]))
+        // console.log(typeof(data[0]))
+      });
+  };
+
+  const dischargeHandler = (row) => {
+    //e.preventDefault();
+    // alert(email + password);
+    var details = {
+      doctorId: "d3a10ddf-4a53-41d4-a119-cbc5f0041be3",
+      patientId: row.id,
+      
+    };
+
+    var formBody = [];
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
+      body: formBody,
+    };
+    fetch("http://localhost:8080/doctor/dischargePatient", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        //props.onSignIn(data);
+        console.log(data);
+        setUpd(data);
+
+        //setResData(data);
+      });
+  };
+
+  React.useEffect(() => {
+    getPatients();
+  }, [upd]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -88,7 +131,7 @@ export default function StickyHeadTable() {
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h2" align="center">
-        ADMIT PATIENT
+        DISCHARGE PATIENT
       </Typography>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -122,8 +165,12 @@ export default function StickyHeadTable() {
                       );
                     })}
                     <TableCell>
-                      <Button color="secondary" variant="contained">
-                        ADMIT
+                      <Button
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => dischargeHandler(row)}
+                      >
+                        DISCHARGE
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -9,13 +9,16 @@ import Paper from "@material-ui/core/Paper";
 //import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
+import AddHospital from "./AddHospital"
+import Account from "./Account"
 
 const useStyles = makeStyles({
   root: {
     // padding: '8px',
-    height: "100vh",
+    height: "130vh",
   },
   paper: {
     width: "100%",
@@ -24,12 +27,12 @@ const useStyles = makeStyles({
   },
   paperNav: {
     width: "100%",
-    height: "90vh",
+    height: "120vh",
     backgroundColor: "gray",
   },
   paperWin: {
     width: "100%",
-    height: "90vh",
+    height: "120vh",
     backgroundColor: "white",
   },
   card: {
@@ -39,6 +42,8 @@ const useStyles = makeStyles({
 
 const Moh = (props) => {
   const classes = useStyles();
+  const [showAddHospital, setAddHospital] = React.useState(false);
+  const [showAccount, setShowAccount] = React.useState(false)
 
   return (
     // <Container fixed>
@@ -53,6 +58,11 @@ const Moh = (props) => {
             <Paper className={classes.paperNav}>
               <Grid item container spacing={2} direction="column">
                 <Grid item xs>
+                  <Typography variant="h5" component="h2" align="center">
+                    MOH
+                  </Typography>
+                </Grid>
+                <Grid item xs>
                   <Button
                     type="submit"
                     fullWidth
@@ -60,6 +70,10 @@ const Moh = (props) => {
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
+                    onClick={() => {
+                      setAddHospital(true);
+                      setShowAccount(false)
+                    }}
                   >
                     Add Hospital
                   </Button>
@@ -68,19 +82,37 @@ const Moh = (props) => {
                   <Button
                     type="submit"
                     fullWidth
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
                   >
-                    Discharge Patient
+                    Statistics
+                  </Button>
+                </Grid>
+                <Grid item xs>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    // onClick={signInHandler}
+                    onClick={() => {
+                      setAddHospital(false);
+                      setShowAccount(true)
+                    }}
+                  >
+                    Account
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <Paper className={classes.paperWin}></Paper>
+            {/* <Paper className={classes.paperWin}></Paper>
+             */}
+             {showAddHospital ? <AddHospital /> : showAccount ? <Account /> : null}
           </Grid>
         </Grid>
 

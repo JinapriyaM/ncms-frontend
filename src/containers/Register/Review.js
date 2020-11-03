@@ -5,14 +5,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import { connect } from "react-redux";
 
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  // { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  // { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  // { name: 'Shipping', desc: '', price: 'Free' },
-];
+
+
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 const payments = [
   { name: 'Card type', detail: 'Visa' },
@@ -33,8 +29,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review() {
+const Review = (props) => {
   const classes = useStyles();
+
+  const products = [
+    { name: "First Name" , desc: 'A nice thing', price: props.firstname },
+    { name: 'Last Name', desc: 'Another thing', price: props.lastname },
+    { name: 'District', desc: 'Something else', price: props.district },
+    { name: 'Contact No', desc: 'Best thing of all', price: props.contactno },
+    { name: 'Location X', desc: '', price: props.locationx },
+    { name: 'Location Y', desc: '', price: props.locationy },
+    { name: 'Gender', desc: '', price: props.gender },
+    { name: 'Age', desc: '', price: props.age },
+  ];
 
   return (
     <React.Fragment>
@@ -44,16 +51,16 @@ export default function Review() {
       <List disablePadding>
         {products.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
+            <ListItemText primary={product.name}  />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
-        <ListItem className={classes.listItem}>
+        {/* <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
             $34.06
           </Typography>
-        </ListItem>
+        </ListItem> */}
       </List>
       {/* <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
@@ -84,3 +91,20 @@ export default function Review() {
     </React.Fragment>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    firstname: state.regis.firstname,
+    lastname: state.regis.lastname,
+    address: state.regis.address,
+    contactno: state.regis.contactno,
+    district: state.regis.district,
+    locationx: state.regis.locationx,
+    locationy: state.regis.locationy,
+    gender: state.regis.gender,
+    age: state.regis.age,
+    email: state.regis.email,
+    password: state.regis.password,
+  };
+};
+
+export default connect(mapStateToProps)(Review);

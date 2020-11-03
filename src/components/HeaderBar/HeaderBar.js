@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: "none",
+    textDecoration: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -143,6 +144,7 @@ const HeaderBar = (props) => {
           className={classes.title}
           variant="h6"
           noWrap
+          style={{color: "white", textDecoration: "none", padding: 10}}
           // onClick={(e) => <Redirect to={{ pathname: "/home" }} />}
         >
           SignIn
@@ -153,6 +155,7 @@ const HeaderBar = (props) => {
           className={classes.title}
           variant="h6"
           noWrap
+          style={{color: "white", textDecoration: "none", padding: 10}}
           // onClick={(e) => <Redirect to={{ pathname: "/home" }} />}
         >
           Register
@@ -230,6 +233,7 @@ const HeaderBar = (props) => {
               className={classes.title}
               variant="h6"
               noWrap
+              style={{color: "white", textDecoration: "none"}}
               // onClick={(e) => <Redirect to={{ pathname: "/home" }} />}
             >
               NCMS

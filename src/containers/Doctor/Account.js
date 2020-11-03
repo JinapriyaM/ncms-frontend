@@ -50,14 +50,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = (props) => {
+const Account = (props) => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRePassword] = useState("");
   const [emailValidate, setEmailValidate] = useState("");
   const [passwordValidate, setPasswordValidate] = useState("");
   const [isRedirect, setRedirect] = useState(false);
   const [resData, setResData] = useState(null);
-  let rea;
+
 
   const validateInputs = (email, password) => {
     if (!validEmailRegex.test(email)) {
@@ -72,7 +74,8 @@ const SignIn = (props) => {
   };
 
   const validEmailRegex = RegExp(
-    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  );
 
   const signInHandler = (e) => {
     e.preventDefault();
@@ -102,31 +105,18 @@ const SignIn = (props) => {
         .then((data) => {
           props.onSignIn(data);
           console.log(data)
-          console.log(Object.keys(data).length)
 
           //setResData(data);
         });
     }
   };
-  if (props.type === "patient") {
-    rea = <Redirect to={{ pathname: "/patient" }} />;
-  } else if (props.type === "doctor") {
-    rea = <Redirect to={{ pathname: "/doctor" }} />;
-  } else if (props.type === "hospital") {
-    rea = <Redirect to={{ pathname: "/hospital" }} />;
-  } else if (props.type === "moh") {
-    rea = <Redirect to={{ pathname: "/moh" }} />;
-  } else if (props.type === "no") {
-    alert("Wrong user name or password");
-  }
+  
   //rea = resData === "madu" ? <Redirect to={{ pathname: "/doctor" }} /> : null;
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
-      {rea}
       <Paper className={classes.paperroot}>
-        <HeaderBar />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
@@ -134,12 +124,13 @@ const SignIn = (props) => {
           <LockOutlinedIcon />
         </Avatar> */}
             <Typography component="h1" variant="h5">
-              Sign in
+              Account Details
             </Typography>
             <form className={classes.form} noValidate>
               <TextField
                 variant="outlined"
                 margin="normal"
+                size="small"
                 required
                 fullWidth
                 id="email"
@@ -154,6 +145,23 @@ const SignIn = (props) => {
               <TextField
                 variant="outlined"
                 margin="normal"
+                size="small"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="email"
+                onChange={(e) => setName(e.target.value)}
+              
+                // error={emailValidate}
+                // helperText={emailValidate}
+              />
+              
+              <TextField
+                variant="outlined"
+                margin="normal"
+                size="small"
                 required
                 fullWidth
                 name="password"
@@ -165,6 +173,22 @@ const SignIn = (props) => {
                 error={passwordValidate}
                 helperText={passwordValidate}
               />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                size="small"
+                required
+                fullWidth
+                name="repassword"
+                label="Re-enter Password"
+                type="password"
+                id="repassword"
+                onChange={(e) => setRePassword(e.target.value)}
+                autoComplete="current-password"
+                error={passwordValidate}
+                helperText={passwordValidate}
+              />
+              
 
               <Button
                 type="submit"
@@ -174,20 +198,9 @@ const SignIn = (props) => {
                 className={classes.submit}
                 onClick={signInHandler}
               >
-                Sign In
+                Apply Changes
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link to="forgrpwd" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link to="/register" variant="body2">
-                    {"Patient Register"}
-                  </Link>
-                </Grid>
-              </Grid>
+              
             </form>
           </div>
           <Box mt={8}>{/* <Copyright /> */}</Box>
@@ -197,17 +210,4 @@ const SignIn = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.user.name,
-    type: state.user.type,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSignIn: (data) => dispatch(setUserData(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default Account;

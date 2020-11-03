@@ -5,6 +5,8 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
+
+import { connect } from "react-redux";
 import SignIn from "./containers/Signinup/SignIn";
 import Home from "./containers/Home/Home";
 import HeaderBar from "./components/HeaderBar/HeaderBar";
@@ -14,18 +16,11 @@ import Hospital from "./containers/Hospital/Hospital";
 import Moh from "./containers/Moh/Moh";
 import Patient from "./containers/Patient/Patient";
 
-function App() {
-  return (
-    <Router>
-      <main>
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/sign" exact>
-            <SignIn />
-          </Route>
-          <Route path="/doctor" exact>
+function App(props) {
+  let rout = null;
+  if(props.logged){
+    rout = (<>
+    <Route path="/doctor" exact>
             <Doctor />
           </Route>
           <Route path="/hospital" exact>
@@ -37,14 +32,19 @@ function App() {
           <Route path="/patient" exact>
             <Patient />
           </Route>
-          {/* 
-					<Route path="/doctor-stat" exact>
-						<DoctorStat />
-					</Route>
-					<Route path="/admit-patient" exact>
-						<AdmitPatient />
+          </>)
+  }
+  return (
+    <Router>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
           </Route>
-           */}
+          <Route path="/sign" exact>
+            <SignIn />
+          </Route>
+          {rout}
           <Route path="/register" exact>
             <Register />
           </Route>
@@ -57,4 +57,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    logged: state.user.logged
+  }
+}
+
+export default connect(mapStateToProps)(App);

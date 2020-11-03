@@ -26,6 +26,7 @@ const AddressForm = (props) => {
             id="firstName"
             name="firstName"
             label="First name"
+            value= {props.firstname}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: e.target.value,
@@ -49,6 +50,7 @@ const AddressForm = (props) => {
             id="lastName"
             name="lastName"
             label="Last name"
+            value= {props.lastname}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -72,6 +74,7 @@ const AddressForm = (props) => {
             id="address1"
             name="address"
             label="Address"
+            value= {props.address}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -96,6 +99,7 @@ const AddressForm = (props) => {
             id="address2"
             name="contact"
             label="Contact Number"
+            value= {props.contactno}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -119,6 +123,7 @@ const AddressForm = (props) => {
             id="city"
             name="city"
             label="District"
+            value= {props.district}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -137,7 +142,7 @@ const AddressForm = (props) => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             id="state"
             name="state"
             label="State/Province/Region"
@@ -155,7 +160,7 @@ const AddressForm = (props) => {
             //   })
             // }
             fullWidth
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -164,6 +169,7 @@ const AddressForm = (props) => {
             id="locationX"
             name="locationX"
             label="location X"
+            value= {props.locationx}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -188,6 +194,7 @@ const AddressForm = (props) => {
             id="locationY"
             name="locationY"
             label="locationY"
+            value= {props.locationy}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,
@@ -210,6 +217,7 @@ const AddressForm = (props) => {
             required
             {...flatProps}
             id="flat-demo"
+            value= {props.gender}
             renderInput={(params) => (
               <TextField {...params} label="Gender" margin="normal" />
             )}
@@ -236,6 +244,7 @@ const AddressForm = (props) => {
             id="locationY"
             name="age"
             label="Age"
+            value= {props.age}
             onChange={(e) =>
               props.onRegisterStepOne({
                 firstname: props.firstname,

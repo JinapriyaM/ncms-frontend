@@ -16,8 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
 import PCard from "../../components/Card/PCard";
 import AdmitTable from "./AdmitTable";
-import DischargeTable from './DischargeTable'
-
+import DischargeTable from "./DischargeTable";
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
   paperNav: {
     width: "100%",
     height: "93vh",
-    backgroundColor: "white",
+    backgroundColor: "gray",
   },
   paperWin: {
     width: "100%",
@@ -75,22 +74,39 @@ const Doctor = (props) => {
   //     );
   //   });
   let patient = null;
-  console.log(patient);
+  // console.log(patient);
   //   const loadPatientHandler = (e) => {
   //     e.preventDefault();
 
-  patient = products.map((pro, index) => {
-    return (
-      <Grid key={index} xs={3} item>
-        <PCard key={index} title={pro.name} user={pro.price} desc={pro.desc} />
-        {console.log(pro.name)}
-      </Grid>
-    );
-  });
-  console.log(patient);
-  console.log(props.name);
-  console.log(props.username);
-  console.log(props.type);
+  const loginHandler = (event) => {
+    event.preventDefault();
+    // console.log(formState.email);
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
+    };
+    fetch("http://localhost:8080/doctor/getNotAdmitPatients", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.Response.map(i => i.firstname))
+        // const newData = data.Response
+        console.log(data);
+      });
+  };
+
+  // patient = products.map((pro, index) => {
+  //   return (
+  //     <Grid key={index} xs={3} item>
+  //       <PCard key={index} title={pro.name} user={pro.price} desc={pro.desc} />
+  //       {console.log(pro.name)}
+  //     </Grid>
+  //   );
+  // });
+  // console.log(patient);
+  // console.log(props.name);
+  // console.log(props.username);
+  // console.log(props.type);
   //loadNewPatients(true);
   //   };
 
@@ -105,9 +121,9 @@ const Doctor = (props) => {
         <Grid container>
           <Grid item container xs={2}>
             <Paper className={classes.paperNav} elevation={20} square>
-              <Grid item container spacing={2} direction="column" >
+              <Grid item container spacing={2} direction="column">
                 <Grid item xs>
-                  <Typography variant="h5" component="h2">
+                  <Typography variant="h5" component="h2" align="center">
                     Doctor
                   </Typography>
                 </Grid>
@@ -118,7 +134,10 @@ const Doctor = (props) => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={() => loadNewPatients(true)}
+                    onClick={() => {
+                      loadNewPatients(true);
+                      setDischarge(false);
+                    }}
                     // onClick={signInHandler}
                   >
                     Admit Patient
@@ -132,8 +151,28 @@ const Doctor = (props) => {
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
+                    onClick={() => {
+                      loadNewPatients(false);
+                      setDischarge(true);
+                    }}
                   >
                     Discharge Patient
+                  </Button>
+                </Grid>
+                <Grid item xs>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={loginHandler}
+                    // onClick={() => {
+                    //   loadNewPatients(false);
+                    //   setDischarge(true);
+                    // }}
+                  >
+                    Statistics
                   </Button>
                 </Grid>
               </Grid>
@@ -142,7 +181,15 @@ const Doctor = (props) => {
           <Grid item container xs={10}>
             {/* <Paper className={classes.paperWin}>
             </Paper> */}
-            {newPatients ? <AdmitTable /> : "ddddddd"}
+            {newPatients ? (
+              <AdmitTable />
+            ) : discharge ? (
+              <DischargeTable />
+            ) : (
+              <Typography variant="h5" align="center" component="h2">
+                Welcome Dr. {props.name}
+              </Typography>
+            )}
           </Grid>
         </Grid>
 
@@ -158,8 +205,7 @@ const mapStateToProps = (state) => {
   return {
     username: state.username,
     name: state.name,
-    type: state.type
-
+    type: state.type,
   };
 };
 
