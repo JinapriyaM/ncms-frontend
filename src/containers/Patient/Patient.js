@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import image from "../../alies/wgMLUS.jpg";
 import Container from "@material-ui/core/Container";
+import { connect } from "react-redux";
+
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -62,7 +64,7 @@ const Patient = (props) => {
                     Patient
                   </Typography>
                 </Grid>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Button
                     type="submit"
                     fullWidth
@@ -86,12 +88,28 @@ const Patient = (props) => {
                   >
                     Discharge Patient
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Paper>
           </Grid>
-          <Grid item container xs={10}>
-            dddd
+          <Grid item container xs={10} alignItems="center" justify="center">
+            <Grid item>
+            <Typography variant="h5" align="center" component="h2">
+              Email: {props.username}
+            </Typography>
+            <Typography variant="h5" align="center" component="h2">
+              Status: {props.status}
+            </Typography>
+            <Typography variant="h5" align="center" component="h2">
+              Hospital Name: {props.hosId} 
+            </Typography>
+            <Typography variant="h5" align="center" component="h2">
+              Severity Level: {props.level} 
+            </Typography>
+            <Typography variant="h5" align="center" component="h2">
+              No: {props.queue} 
+            </Typography>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -103,4 +121,17 @@ const Patient = (props) => {
   );
 };
 
-export default Patient;
+const mapStateToProps = (state) => {
+  return {
+    username: state.user.username,
+    hospital: state.user.id,
+    hosId: state.user.hospitalId,
+    name: state.user.name,
+    status: state.user.status,
+    level: state.user.level,
+    queue: state.user.queue
+   
+  };
+};
+
+export default connect(mapStateToProps)(Patient);

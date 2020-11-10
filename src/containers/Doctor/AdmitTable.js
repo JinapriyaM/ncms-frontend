@@ -10,6 +10,9 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
+
 
 const columns = [
   { id: "firstname", label: "First Name", minWidth: 170 },
@@ -53,12 +56,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable(props) {
+  const genderObject = [{ gen: "Low" }, { gen: "Mid" }, { gen: "High" }];
+  const flatProps = {
+    options: genderObject.map((option) => option.gen),
+  };
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
   const [upd, setUpd] = React.useState("");
+  const [sav, setSav] = React.useState("Low");
   // let rows  = []
 
   const getPatients = () => {
@@ -67,7 +75,11 @@ export default function StickyHeadTable() {
       headers: { "Content-Type": "application/json" },
       // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
     };
-    fetch("http://localhost:8080/doctor/getNotAdmitPatients", requestOptions)
+    // fetch("http://localhost:8080/doctor/getNotAdmitPatients", requestOptions)
+    fetch(
+      `http://localhost:8080/doctor/getNotAdmitPatients?hospitalId=${props.hosId}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => {
         // console.log(data.Response.map(i => i.firstname))
@@ -85,7 +97,7 @@ export default function StickyHeadTable() {
     var details = {
       doctorId: "d3a10ddf-4a53-41d4-a119-cbc5f0041be3",
       patientId: row.id,
-      severityLevel: "Low",
+      severityLevel: sav,
     };
 
     var formBody = [];
@@ -162,6 +174,25 @@ export default function StickyHeadTable() {
                         </TableCell>
                       );
                     })}
+                    <TableCell>
+                      <Autocomplete
+                        required
+                        {...flatProps}
+                        id="flat-demo"
+                        value={props.gender}
+                        
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Severity"
+                            // margin="normal"
+                            variant="outlined"
+                          />
+                        )}
+
+                        onChange={(e, value)=>setSav(value)}
+                      />
+                    </TableCell>
                     <TableCell>
                       <Button
                         color="secondary"

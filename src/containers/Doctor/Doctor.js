@@ -143,7 +143,8 @@ const Doctor = (props) => {
                     Admit Patient
                   </Button>
                 </Grid>
-                <Grid item xs>
+                {props.isDirector=="1" ? <Grid item xs>
+
                   <Button
                     type="submit"
                     fullWidth
@@ -158,7 +159,7 @@ const Doctor = (props) => {
                   >
                     Discharge Patient
                   </Button>
-                </Grid>
+                </Grid> : null}
                 <Grid item xs>
                   <Button
                     type="submit"
@@ -182,12 +183,12 @@ const Doctor = (props) => {
             {/* <Paper className={classes.paperWin}>
             </Paper> */}
             {newPatients ? (
-              <AdmitTable />
+              <AdmitTable hosId={props.hosId} />
             ) : discharge ? (
-              <DischargeTable />
+              <DischargeTable hosId={props.hosId} docId={props.docId} />
             ) : (
               <Typography variant="h5" align="center" component="h2">
-                Welcome Dr. {props.name}
+                Welcome Dr. {props.username}
               </Typography>
             )}
           </Grid>
@@ -203,9 +204,12 @@ const Doctor = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username,
-    name: state.name,
-    type: state.type,
+    username: state.user.username,
+    name: state.user.name,
+    type: state.user.type,
+    isDirector: state.user.isDirector,
+    hosId: state.user.hospitalId,
+    docId: state.user.id
   };
 };
 

@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
 import AddHospital from "./AddHospital"
 import Account from "./Account"
+import MohBed from "../../components/Chart/MohBed"
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +44,8 @@ const useStyles = makeStyles({
 const Moh = (props) => {
   const classes = useStyles();
   const [showAddHospital, setAddHospital] = React.useState(false);
-  const [showAccount, setShowAccount] = React.useState(false)
+  const [showAccount, setShowAccount] = React.useState(false);
+  const [showStat, setShowStat] = React.useState(false);
 
   return (
     // <Container fixed>
@@ -72,13 +74,14 @@ const Moh = (props) => {
                     // onClick={signInHandler}
                     onClick={() => {
                       setAddHospital(true);
-                      setShowAccount(false)
+                      setShowAccount(false);
+                      setShowStat(false);
                     }}
                   >
                     Add Hospital
                   </Button>
                 </Grid>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Button
                     type="submit"
                     fullWidth
@@ -86,6 +89,12 @@ const Moh = (props) => {
                     color="primary"
                     className={classes.submit}
                     // onClick={signInHandler}
+                    onClick={() => {
+                      setAddHospital(false);
+                      setShowAccount(false)
+                      setShowStat(true);
+
+                    }}
                   >
                     Statistics
                   </Button>
@@ -101,18 +110,20 @@ const Moh = (props) => {
                     onClick={() => {
                       setAddHospital(false);
                       setShowAccount(true)
+                      setShowStat(false);
+
                     }}
                   >
                     Account
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Paper>
           </Grid>
           <Grid item xs={10}>
             {/* <Paper className={classes.paperWin}></Paper>
              */}
-             {showAddHospital ? <AddHospital /> : showAccount ? <Account /> : null}
+             {showAddHospital ? <AddHospital /> : showAccount ? <Account /> : showStat ? <MohBed /> : null}
           </Grid>
         </Grid>
 

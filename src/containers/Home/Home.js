@@ -44,6 +44,38 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = (props) => {
   const classes = useStyles();
+  const [hosCount, setHosCount] = React.useState(0);
+  const [pasCount, setPasCount] = React.useState(0);
+  const [disCount, setDisCount] = React.useState(0);
+  const [toCount, setToCount] = React.useState(0);
+
+  const getPatients = () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
+    };
+    fetch("http://localhost:8080/statistics?user=general", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.Response.map(i => i.firstname))
+        // const newData = data.Response
+        
+        console.log(data.Response);
+        setPasCount(data.patients);
+        setDisCount(data.dis);
+        setToCount(data.to);
+        setHosCount(data.hos);
+        // console.log(Object.values(data[0]))
+        // rows.push(Object.values(data[0]))
+        // console.log(typeof(data[0]))
+      });
+  };
+
+  React.useEffect(() => {
+    getPatients();
+  }, []);
+
 
   return (
     // <Container fixed>
@@ -59,16 +91,19 @@ const Home = (props) => {
               National Covid Management System
             </Typography>
             <Typography variant="h5" align="center" component="h2">
-              Total Hospitals: 5
+              Total Hospitals: {hosCount}
             </Typography>
             <Typography variant="h5" align="center" component="h2">
-              Total Cases: 76
+              Total Cases: {pasCount}
             </Typography>
             <Typography variant="h5" align="center" component="h2">
-              Admitted Patients: 50
+              Admitted Patients: {disCount}
             </Typography>
             <Typography variant="h5" align="center" component="h2">
-              Waiting List: 26
+              To Admit: {toCount}
+            </Typography>
+            <Typography variant="h5" align="center" component="h2">
+              Discharged: {Number(pasCount) - (Number(toCount) + Number(disCount))}
             </Typography>
 
           </Paper>

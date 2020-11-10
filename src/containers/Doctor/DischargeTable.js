@@ -55,7 +55,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable(props) {
+  console.log(props.hosId)
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -69,7 +70,9 @@ export default function StickyHeadTable() {
       headers: { "Content-Type": "application/json" },
       // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
     };
-    fetch("http://localhost:8080/doctor/getAdmitedPatients", requestOptions)
+    // fetch("http://localhost:8080/doctor/getAdmitedPatients", requestOptions)
+    fetch(`http://localhost:8080/doctor/getAdmitedPatients?hospitalId=${props.hosId}`, requestOptions)
+    // fetch("http://localhost:8080/doctor/getAdmitedPatients?hospitalId=a6c5c429-8c6b-4939-ba11-190b7da68951", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data.Response.map(i => i.firstname))
@@ -85,7 +88,7 @@ export default function StickyHeadTable() {
     //e.preventDefault();
     // alert(email + password);
     var details = {
-      doctorId: "d3a10ddf-4a53-41d4-a119-cbc5f0041be3",
+      doctorId: props.docId,
       patientId: row.id,
       
     };

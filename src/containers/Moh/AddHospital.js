@@ -18,6 +18,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
 
@@ -51,24 +53,51 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddHospital = (props) => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRePassword] = useState("");
+  const [hosEmail, setHosEmail] = useState("");
+  const [hosName, setHosName] = useState("");
+  const [district, setDistrict] = useState("");
+  const [locationX, setLocationX] = useState("");
+  const [locationY, setLocationY] = useState("");
+  const [hospassword, sethosPassword] = useState("");
+  const [rehospassword, setReHosPassword] = useState("");
+
+  const [direcEmail, setDirecEmail] = useState("");
+  const [direcName, setDirecName] = useState("");
+  const [direcPwd, setDirecPwd] = useState("");
+  const [direcRePwd, setDirecRePwd] = useState("");
+
   const [emailValidate, setEmailValidate] = useState("");
   const [passwordValidate, setPasswordValidate] = useState("");
+  const [direcEmailValidate, setDirecEmailValidate] = useState("");
+  const [direcPasswordValidate, setDirecPwdValidate] = useState("");
+
   const [isRedirect, setRedirect] = useState(false);
   const [resData, setResData] = useState(null);
 
+  const [openSu, setOpenSuc] = useState(false);
+  const [openFa, setOpenFai] = useState(false);
 
-  const validateInputs = (email, password) => {
-    if (!validEmailRegex.test(email)) {
+
+  const validateInputs = (hosemail, hospassword, direcemail, direcpwd) => {
+    if (!validEmailRegex.test(hosemail)) {
       setEmailValidate("Email is not valid");
       return false;
-    } else if (password.length < 8) {
+    } else if (hospassword.length < 8) {
       setPasswordValidate("Password must be greater than 8 characters.");
       return false;
-    } else {
+    } else if(hospassword !== rehospassword){
+      setPasswordValidate("Passwords not match")
+      return false;
+    }else if(!validEmailRegex.test(direcemail)){
+      setDirecEmailValidate("Email is not valid");
+      return false;
+    }else if (direcpwd.length < 8) {
+      setDirecPwdValidate("Password must be greater than 8 characters.");
+      return false;
+    } else if(direcpwd !== direcRePwd){
+      setDirecPwdValidate("Passwords not match");
+      return false;
+    }else{
       return true;
     }
   };
@@ -80,10 +109,17 @@ const AddHospital = (props) => {
   const signInHandler = (e) => {
     e.preventDefault();
     // alert(email + password);
-    if (validateInputs(email, password)) {
+    if (validateInputs(hosEmail, hospassword, direcEmail, direcPwd  )) {
       var details = {
-        userName: email,
-        password: password,
+        name: hosName,
+        district: district,
+        locationX: locationX,
+        locationY: locationY,
+        hosEmail: hosEmail,
+        hosPwd: hospassword,
+        direcEmail: direcEmail,
+        direcName: direcName,
+        direcPwd: direcPwd,
       };
 
       var formBody = [];
@@ -100,12 +136,28 @@ const AddHospital = (props) => {
         // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
         body: formBody,
       };
-      fetch("http://localhost:8080/user/login", requestOptions)
+      fetch("http://localhost:8080/hospital/register", requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          props.onSignIn(data);
+          
           console.log(data)
-
+          if (data.Response === "success") {
+            setOpenSuc(true);
+          } else {
+            // setAlert(2);
+            setOpenFai(true);
+          }
+          setHosEmail("");
+          setHosName("");
+          setDistrict("");
+          setLocationX("");
+          setLocationY("");
+          sethosPassword("");
+          setReHosPassword("");
+          setDirecEmail("");
+          setDirecName("");
+          setDirecPwd("");
+          setDirecRePwd("");
           //setResData(data);
         });
     }
@@ -115,6 +167,12 @@ const AddHospital = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <Snackbar open={openSu} autoHideDuration={3000} onClose={() => setOpenSuc(false)} anchorOrigin={{vertical:'bottom', horizontal:'center'}}>
+        <Alert variant="filled" severity="success">Succesfully Registerd</Alert>
+      </Snackbar>
+      <Snackbar open={openFa} autoHideDuration={3000} onClose={ () => setOpenFai(false)} anchorOrigin={{vertical:'bottom', horizontal:'center'}}>
+        <Alert severity="error">Unsuccesful.</Alert>
+      </Snackbar>
       <CssBaseline />
       <Paper className={classes.paperroot}>
         <Container component="main" maxWidth="xs">
@@ -137,7 +195,7 @@ const AddHospital = (props) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setHosEmail(e.target.value)}
                 autoFocus
                 error={emailValidate}
                 helperText={emailValidate}
@@ -152,7 +210,7 @@ const AddHospital = (props) => {
                 label="Name"
                 name="name"
                 autoComplete="email"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setHosName(e.target.value)}
               
                 // error={emailValidate}
                 // helperText={emailValidate}
@@ -167,7 +225,7 @@ const AddHospital = (props) => {
                 label="District"
                 name="district"
                 autoComplete="email"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setDistrict(e.target.value)}
               
                 // error={emailValidate}
                 // helperText={emailValidate}
@@ -183,7 +241,7 @@ const AddHospital = (props) => {
                 label="Location X"
                 name="locationx"
                 autoComplete="email"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setLocationX(e.target.value)}
               
                 // error={emailValidate}
                 // helperText={emailValidate}
@@ -199,7 +257,7 @@ const AddHospital = (props) => {
                 label="Location Y"
                 name="locationy"
                 autoComplete="email"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setLocationY(e.target.value)}
               
                 // error={emailValidate}
                 // helperText={emailValidate}
@@ -214,7 +272,7 @@ const AddHospital = (props) => {
                 label="Password"
                 type="password"
                 id="password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => sethosPassword(e.target.value)}
                 autoComplete="current-password"
                 error={passwordValidate}
                 helperText={passwordValidate}
@@ -229,7 +287,7 @@ const AddHospital = (props) => {
                 label="Re-enter Password"
                 type="password"
                 id="repassword"
-                onChange={(e) => setRePassword(e.target.value)}
+                onChange={(e) => setReHosPassword(e.target.value)}
                 autoComplete="current-password"
                 error={passwordValidate}
                 helperText={passwordValidate}
@@ -244,7 +302,7 @@ const AddHospital = (props) => {
                 label="Director's Email Address"
                 name="demail"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setDirecEmail(e.target.value)}
                 error={emailValidate}
                 helperText={emailValidate}
               />
@@ -258,7 +316,7 @@ const AddHospital = (props) => {
                 label="Name"
                 name="dname"
                 autoComplete="email"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setDirecName(e.target.value)}
               
                 // error={emailValidate}
                 // helperText={emailValidate}
@@ -273,7 +331,7 @@ const AddHospital = (props) => {
                 label="Director Password"
                 type="password"
                 id="dpassword"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setDirecPwd(e.target.value)}
                 autoComplete="current-password"
                 error={passwordValidate}
                 helperText={passwordValidate}
@@ -288,7 +346,7 @@ const AddHospital = (props) => {
                 label="Re-enter Director Password"
                 type="password"
                 id="drepassword"
-                onChange={(e) => setRePassword(e.target.value)}
+                onChange={(e) => setDirecRePwd(e.target.value)}
                 autoComplete="current-password"
                 error={passwordValidate}
                 helperText={passwordValidate}

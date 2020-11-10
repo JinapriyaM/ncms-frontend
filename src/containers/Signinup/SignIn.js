@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
-import { setUserData } from "../../store/action/action";
+import { setUserData, setUserDataDoctor, setUserDataHospital, setUserDataMoh, setUserDataPatient, setUserDataPatientQueue } from "../../store/action/action";
 
 //import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
@@ -100,9 +100,24 @@ const SignIn = (props) => {
       fetch("http://localhost:8080/user/login", requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          props.onSignIn(data);
+          //props.onSignIn(data);
           console.log(data)
           console.log(Object.keys(data).length)
+          switch(Object.keys(data).length){
+            case 5:
+              props.onSignInMoh(data);
+            case 6:
+              props.onSignInPatientQueue(data);
+            case 7:
+              props.onSignInPatient(data);
+            case 8:
+              props.onSignInDoctor(data);
+            case 9:
+              console.log("fdff")
+              props.onSignInHospital(data);
+            default:
+              console.log("dddd");
+          }
 
           //setResData(data);
         });
@@ -206,7 +221,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignIn: (data) => dispatch(setUserData(data)),
+    onSignInPatient: (data) => dispatch(setUserDataPatient(data)),
+    onSignInPatientQueue: (data) => dispatch(setUserDataPatientQueue(data)),
+    onSignInDoctor: (data) => dispatch(setUserDataDoctor(data)),
+    onSignInHospital: (data) => dispatch(setUserDataHospital(data)),
+    onSignInMoh: (data) => dispatch(setUserDataMoh(data)),
   };
 };
 
