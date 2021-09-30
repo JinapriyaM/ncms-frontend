@@ -1,51 +1,66 @@
 import React from "react";
 import {
-	BrowserRouter as Router,
-	Route,
-	Redirect,
-	Switch,
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
 } from "react-router-dom";
 
+import { connect } from "react-redux";
+import SignIn from "./containers/Signinup/SignIn";
 import Home from "./containers/Home/Home";
-import Signinup from "./containers/Signinup/Signinup";
-import Register from './containers/Register/Register';
-import Doctor from './containers/Doctor/Doctor';
-import DoctorStat from './containers/Doctor/DoctorStat/DoctorStat';
-import AdmitPatient from './containers/Doctor/AdmitPatient/AdmitPatient';
+import HeaderBar from "./components/HeaderBar/HeaderBar";
+import Register from "./containers/Register/Register";
+import Doctor from "./containers/Doctor/Doctor";
+import Hospital from "./containers/Hospital/Hospital";
+import Moh from "./containers/Moh/Moh";
+import Patient from "./containers/Patient/Patient";
 
-import MainNavigation from "./components/Navigation/MainNavigation";
-import Footer from './components/Footer/Footer';
+function App(props) {
+  let rout = null;
+  if(props.logged){
+    rout = (<>
+    <Route path="/doctor" exact>
+            <Doctor />
+          </Route>
+          <Route path="/hospital" exact>
+            <Hospital />
+          </Route>
+          <Route path="/moh" exact>
+            <Moh />
+          </Route>
+          <Route path="/patient" exact>
+            <Patient />
+          </Route>
+          </>)
+  }
+  return (
+    <Router>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/sign" exact>
+            <SignIn />
+          </Route>
+          {rout}
+          <Route path="/register" exact>
+            <Register />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </main>
 
-function App() {
-	return (
-		<Router>
-			<MainNavigation />
-			<main>
-				<Switch>
-					<Route path="/" exact>
-						<Home />
-					</Route>
-					<Route path="/sign" exact>
-						<Signinup />
-					</Route>
-					<Route path="/doctor" exact>
-						<Doctor />
-					</Route>
-					<Route path="/doctor-stat" exact>
-						<DoctorStat />
-					</Route>
-					<Route path="/admit-patient" exact>
-						<AdmitPatient />
-					</Route>
-					<Route path="/register" exact>
-						<Register />
-					</Route>
-					<Redirect to="/" />
-				</Switch>
-			</main>
-			<Footer />
-		</Router>
-	);
+      {/* <footer>ddddd</footer> */}
+    </Router>
+  );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    logged: state.user.logged
+  }
+}
+
+export default connect(mapStateToProps)(App);

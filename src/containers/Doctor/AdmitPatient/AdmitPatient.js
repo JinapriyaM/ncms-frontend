@@ -27,7 +27,7 @@ const AdmitPatient = () => {
         getNewPatient();
     }, [])
 
-    const newPatientList = newPatient.Response.map((i, index) => {
+    let newPatientList = newPatient.Response.map((i, index) => {
         return <li key={index}>i</li>
     })
     console.log(newPatient);

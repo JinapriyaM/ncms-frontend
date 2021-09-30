@@ -21,9 +21,22 @@ const Signinup = () => {
             isValid: false
         }
     }, false);
-    let formData = new FormData();
-    formData.append("userName", "madushanka");
-    formData.append("password", "123456");
+    // let formData = new FormData();
+    // formData.append("userName", "madushanka");
+    // formData.append("password", "123456");
+
+    var details = {
+        'userName': 'madushanka',
+        'password': '123456'
+    };
+    
+    var formBody = [];
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
     
 
     const loginHandler = (event) => {
@@ -31,9 +44,9 @@ const Signinup = () => {
         console.log(formState.email);
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             // body: JSON.stringify({ userName: 'madushanka', password: '123456' })
-            body: formData
+            body: formBody
         };
         fetch('http://localhost:8080/user/login', requestOptions)
         .then(response => response.json())
