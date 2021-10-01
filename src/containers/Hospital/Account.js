@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-
-import { setUserData } from "../../store/action/action";
+import React, { useState } from "react";
 
 //import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
