@@ -15,6 +15,7 @@ import Doctor from "./containers/Doctor/Doctor";
 import Hospital from "./containers/Hospital/Hospital";
 import Moh from "./containers/Moh/Moh";
 import Patient from "./containers/Patient/Patient";
+import Ambulance from "./containers/Ambulance/Ambulance";
 
 function App(props) {
   let rout = null;
@@ -47,6 +48,9 @@ function App(props) {
           {rout}
           <Route path="/register" exact>
             <Register />
+          </Route>
+          <Route path="/ambulance" exact>
+            <Ambulance />
           </Route>
           <Redirect to="/" />
         </Switch>
