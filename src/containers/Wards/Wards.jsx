@@ -57,9 +57,6 @@ const Wards = (props) => {
     { name: "Product 2", desc: "Another thing", price: "$3.45" },
   ];
   let patient = null;
-  // console.log(patient);
-  //   const loadPatientHandler = (e) => {
-  //     e.preventDefault();
 
   const loginHandler = (event) => {
     event.preventDefault();
@@ -72,16 +69,11 @@ const Wards = (props) => {
     fetch("http://localhost:8080/doctor/getNotAdmitPatients", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data.Response.map(i => i.firstname))
-        // const newData = data.Response
         console.log(data);
       });
   };
 
   return (
-    // <Container fixed>
-    //   <img src={image} alt="background" />
-    // </Container>
     <div className={classes.root}>
       <CssBaseline />
       <Paper className={classes.paper}>
@@ -136,10 +128,6 @@ const Wards = (props) => {
                     color="primary"
                     className={classes.submit}
                     onClick={loginHandler}
-                    // onClick={() => {
-                    //   loadNewPatients(false);
-                    //   setDischarge(true);
-                    // }}
                   >
                     Statistics
                   </Button>
@@ -148,8 +136,6 @@ const Wards = (props) => {
             </Paper>
           </Grid>
           <Grid item container xs={10}>
-            {/* <Paper className={classes.paperWin}>
-            </Paper> */}
             {newPatients ? (
               <AdmitTable hosId={props.hosId} />
             ) : discharge ? (
@@ -161,10 +147,6 @@ const Wards = (props) => {
             )}
           </Grid>
         </Grid>
-
-        {/* <Card className={classes.card}>
-          <CardContent>Hello World</CardContent>
-        </Card> */}
       </Paper>
     </div>
   );
