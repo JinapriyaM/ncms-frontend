@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-//import image from "../../alies/wgMLUS.jpg";
-//import Container from "@material-ui/core/Container";
 
 import { connect } from "react-redux";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-//import Card from "@material-ui/core/Card";
-//import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -60,19 +56,6 @@ const Ambulance = (props) => {
     { name: "Product 1", desc: "A nice thing", price: "$9.99" },
     { name: "Product 2", desc: "Another thing", price: "$3.45" },
   ];
-  //   let patient = products.map((pro, index) => {
-  //     return (
-  //       <Grid key={index} xs={4} item>
-  //         <PCard
-  //           key={index}
-  //           title={pro.name}
-  //           user={pro.price}
-  //           desc={pro.desc}
-  //         />
-  //         {console.log(pro.name)}
-  //       </Grid>
-  //     );
-  //   });
   let patient = null;
   // console.log(patient);
   //   const loadPatientHandler = (e) => {
@@ -94,21 +77,6 @@ const Ambulance = (props) => {
         console.log(data);
       });
   };
-
-  // patient = products.map((pro, index) => {
-  //   return (
-  //     <Grid key={index} xs={3} item>
-  //       <PCard key={index} title={pro.name} user={pro.price} desc={pro.desc} />
-  //       {console.log(pro.name)}
-  //     </Grid>
-  //   );
-  // });
-  // console.log(patient);
-  // console.log(props.name);
-  // console.log(props.username);
-  // console.log(props.type);
-  //loadNewPatients(true);
-  //   };
 
   return (
     // <Container fixed>
