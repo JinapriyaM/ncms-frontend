@@ -48,13 +48,6 @@ const Wards = (props) => {
     { name: "Product 1", desc: "A nice thing", price: "$9.99" },
     { name: "Product 2", desc: "Another thing", price: "$3.45" },
     { name: "Product 3", desc: "Something else", price: "$6.51" },
-    { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-    { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-    { name: "Product 2", desc: "Another thing", price: "$3.45" },
-    { name: "Product 3", desc: "Something else", price: "$6.51" },
-    { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-    { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-    { name: "Product 2", desc: "Another thing", price: "$3.45" },
   ];
   let patient = null;
 
@@ -84,7 +77,7 @@ const Wards = (props) => {
               <Grid item container spacing={2} direction="column">
                 <Grid item xs>
                   <Typography variant="h5" component="h2" align="center">
-                    Doctor
+                    Wards
                   </Typography>
                 </Grid>
                 <Grid item xs>
@@ -100,7 +93,7 @@ const Wards = (props) => {
                     }}
                     // onClick={signInHandler}
                   >
-                    Admit Patient
+                    Create new Ward
                   </Button>
                 </Grid>
                 {props.isDirector=="1" ? <Grid item xs>
@@ -117,7 +110,7 @@ const Wards = (props) => {
                       setDischarge(true);
                     }}
                   >
-                    Discharge Patient
+                    Remove Ward
                   </Button>
                 </Grid> : null}
                 <Grid item xs>
@@ -142,7 +135,7 @@ const Wards = (props) => {
               <DischargeTable hosId={props.hosId} docId={props.docId} />
             ) : (
               <Typography variant="h5" align="center" component="h2">
-                Welcome Dr. {props.username}
+                This is ward {props.username}
               </Typography>
             )}
           </Grid>
